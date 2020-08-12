@@ -1,0 +1,122 @@
+:root {
+  --startup-animation: startup 1s linear 0s 1 normal forwards;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+.background {
+  position: absolute;
+  width: 100%;
+  height:100%;
+  display: grid;
+  grid-template-columns: repeat(12 ,1fr);
+  grid-template-rows: repeat(12, 1fr);
+}
+.background-img-rocket img{
+    position: absolute;
+    width: 50px;
+    transform: rotateZ(90deg); 
+    animation: rocket 4s linear 0s 1 normal forwards;
+    
+}
+
+.background-img-tree{
+    background: url("../img/5iRX9Rria.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    grid-column: 2/9;
+    grid-row: 1/11;
+
+}
+.background-img-wolf{
+    background: url("../img/pT57MxGT9.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    grid-column: 8/9;
+    grid-row: 9/11;
+    transition: all 0.8s;
+}
+.start {
+    overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  height: 100vh;
+  background: #dd5347aa;
+  text-align: center;
+  max-width: 2000px;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  
+}
+@media screen and (max-width:1230px){
+  .background-img-wolf{   
+    grid-row: 9/11;
+}
+}
+@media screen and (max-width:1230px){
+  .background-img-wolf{   
+    grid-row: 7/10;
+}
+}
+
+@media screen and (max-width:650px)
+{
+    .background-img-wolf{   
+        grid-row: 7/9;
+    }
+}
+@media screen and (max-width:500px){
+    .background-img-wolf{
+        background-position: top;
+    }
+}
+.start-title {
+  animation: var(--startup-animation);
+  animation-delay: 1s;
+  opacity: 0;
+  margin-top: auto;
+margin-bottom: 20px;
+  color: #085fbe;
+}
+
+#question-count {
+  animation: var(--startup-animation);
+  opacity: 0;
+  animation-delay: 1.6s;
+  cursor: pointer;
+  height: 40px;
+  font-size: 1.2rem;
+  outline: none;
+  border-radius: 3px;
+  background: #bb89f3;
+  margin-bottom: 50px;
+}
+#question-count:hover {
+  background: #caa6f3;
+}
+.start-btn-container {
+ margin-bottom: 50px;
+}
+.start-btn {
+  animation: var(--startup-animation);
+  opacity: 0;
+  animation-delay: 2.4s;
+  cursor: pointer;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
+  outline: none;
+  background: #ffe300;
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+.start-btn:hover {
+  background: #fff28e;
+}

@@ -1,47 +1,136 @@
-.question{
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-   text-align: center;
+* {
+  padding: 0;
+  margin: 0; 
 }
-.error::after{
- content: attr(data-errormsg);
- position: relative;
- bottom: -20px;
- grid-column: 8/10;
+body {
+  /* animation: shockScreen 0.3s linear 0s 2 normal none; */
+  /* animation: disappear 0.3s linear 0s 2 normal none; */
 }
-.red{
-    color: red;
+.screen-shock{
+  animation: shockScreen 0.3s linear 0s 2 normal none;
 }
-.green{
-    color:green;
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffcd43;
+  height: 100vh;
+  font-family: 'Butterfly Kids', cursive;
 }
-.first-number{
-    grid-column: 1/2;
-    cursor: pointer;
-    font-size: 1.2rem;
+.content-container .question-number{
+    text-align: center;
+    margin-bottom: 200px;
+    font-size: 3rem;
+} 
+.content {
+  max-width: 1000px;
+  position: relative;
 }
-.addone::before{
+.question {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.error::after {
+  content: attr(data-errormsg);
+  position: absolute;
+  bottom: -45px;
+  left: 60px;
+  font-size: 3.2em;
+}
+
+.first-number {
+  position: relative;
+  cursor: pointer;
+  font-size: 4rem;
+}
+.addone::before {
+  position: absolute;
+  content: "1";
+  font-weight: bold;
+  top: -13px;
+  left: 10px;
+  font-size: 2rem;
+}
+.symbol {
+  font-size: 4rem;
+  margin: 0 20px;
+}
+.second-number {
+  font-size: 4rem;
+}
+.equal {
+  font-size: 3rem;
+  margin: 0 20px;
+}
+.answear {
+  font-family: 'Butterfly Kids', cursive;
+  font-size: 3rem;
+  outline: none;
+  width: 150px;
+  height: 40px;
+  font-weight: 900;
+}
+.next-btn{
+text-align: center;
+font-size: 3rem;
+letter-spacing: 5px;
+text-transform: uppercase;
+padding: 0 40px;
+display: block;
+margin: 0 auto;
+margin-top: 50px;
+border: none;
+cursor: pointer;
+transition: .3s;
+border-radius: 3px;
+outline: none;
+font-family: 'Butterfly Kids', cursive;
+background: #784c88;
+font-weight: 900;
+}
+.next-btn:hover{
+    background: #0a62bf;
+    color: aliceblue;
+}
+.next-btn:active{
+    background: #4093ec;
+    color: #ffcd43;
+}
+.valiation-msg{
+  position: absolute;
+  bottom: -49px;
+  left: -18px;
+}
+@media screen and (max-width: 780px) {
+  .valiation-msg{
+    left: 50px;
+  }
+}
+@media screen and (max-width: 570px) {
+  .question {
+    flex-direction: column;
+    align-items: center;
+  }
+  .error::after {
+    content: attr(data-errormsg);
     position: absolute;
-    content: "1";
-    font-weight: bold;
-    top: 13px;
-    left: 25px;
-    font-size: .5rem;  
+    bottom: -50px;
+    left: 30px;
+    font-size: 3.2em;
+  }
+  .valiation-msg{
+    bottom: 125px;
+    left: -144px;
+    width: 100px;
+  }
 }
-.symbol{
-    grid-column: 2/3;
-}
-.second-number{
-    grid-column: 3/4;
-    font-size: 1.2rem;
-}
-.equal{
-    grid-column: 4/5;
-    
-}
-.answear{
-    grid-column: 5/7;
-    font-size: 2rem;
-    outline: none;
+
+@media screen and (max-width: 415px) {
+  .valiation-msg{
+    bottom: 120px;
+    left: -90px;
+    width: 100px;
+  }
 }

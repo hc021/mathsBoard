@@ -1,0 +1,99 @@
+:root {
+  --img-base-width: 100px;
+}
+.index-animation {
+  font-family: "Short Stack", cursive;
+  position: relative;
+}
+.index-animation-dialogbox {
+  position: relative;
+}
+.dialog-img {
+  width: var(--img-base-width);
+  position: absolute;
+  top: -400px;
+  left: -60px;
+  opacity: 1;
+ 
+  animation: attention 2s linear 2s 1 normal forwards;
+}
+
+.dialog-message {
+  position: absolute;
+  top: -350px;
+  width: 300px;
+  left: 60px;
+}
+
+.dialog-mum-img {
+  width: var(--img-base-width);
+  position: absolute;
+  top: -610px;
+  left: -390px;
+}
+.dialog-mum-message {
+  position: absolute;
+  top: -450px;
+  left: -390px;
+  width: 100px;
+}
+.validation-monster-img {
+  position: absolute;
+  width: var(--img-base-width);
+  left: -314px;
+  top: -22px;
+}
+@media screen and (max-width: 780px) {
+  .dialog-mum-img {
+    left: -250px;
+  }
+  .dialog-mum-message {
+    top: -610px;
+    left: -100px;
+    width: 300px;
+  }
+  .validation-monster-img {
+    left: -247px;
+  }
+}
+@media screen and (max-width:720px){
+  .dialog-message {
+    width: 220px;
+  }
+}
+@media screen and (max-width: 570px) {
+  .dialog-img {
+    top: -650px;
+  }
+  .dialog-message {
+    top: -650px;
+    width: 180px;
+  }
+  .dialog-mum-img {
+    left: -250px;
+    top: -720px;
+  }
+  .dialog-mum-message {
+    top: -580px;
+    left: -250px;
+    width: 100px;
+  }
+  .validation-monster-img {
+    left: -250px;
+    top: -110px;
+  }
+}
+@media screen and (max-width: 415px) {
+  .dialog-message {
+    width: 145px;
+  }
+  .dialog-mum-img {
+    left: -200px;
+  }
+  .dialog-mum-message {
+    left: -200px;
+  }
+  .validation-monster-img {
+    left: -205px;
+  }
+}
