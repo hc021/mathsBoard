@@ -1,10 +1,15 @@
-import {Author, Charlotte, Mum} from '../data/messages.js'
+
+import { familyMessagesdisplaying, addErrorMsg ,appendLetter} from '../modules/message-animation.js'
+import { ErrorMsg, Mum } from '../data/messages.js'
+import {opacityAnimation} from '../modules/image-animation.js'
 
 const contentParent = document.querySelector('.content');
 
 const btnSubmit = document.getElementById('submit');
 let dataIndex = 0;
 let tempData = [];
+
+
 const getEleById = name => (document.getElementById(name));
 const inputValue = index => document.getElementById(`ans${index}`);
 const firstNumber = index => document.getElementById(`first${index}`);
@@ -13,7 +18,25 @@ const createEle = ele => document.createElement(ele);
 const insertELe = (parentEle, child) => parentEle.appendChild(child);
 const getParmas = () => window.location.search.split("?")[1].split("=")[1];
 const getSymbol = () => Math.random() * 10 <= 5 ? "+" : "-";
-
+//get one or some random number in array
+const getRandomNumbeArry = (count = 1, start = 0, end = 0) => {
+    let arry = [];
+    for (let index = 0; index < count; index++) {
+        const number = Math.floor(Math.random() * 10);
+        if (arry.length <= count) {
+            if (number >= start && number < end) {
+                arry.push(number)
+            } else {
+                count++;
+            }
+        }
+        else {
+            return;
+        }
+    }
+    return arry;
+}
+//append question
 const appendQuestion = (item, parentEle) => {
     let question =
         `
@@ -23,9 +46,10 @@ const appendQuestion = (item, parentEle) => {
               <h4 id="question-symbol" class="symbol">${item.symbol}</h4>
               <h3 id=${item.secondId} class="second-number">${item.secondNumber}</h3>
               <h4 id="equal-symbol" class="equal">=</h4>
-              <input type="number" min="0" maxlength="4" id="ans${item.id}" class="answear"/>
+              <input autofocus type="number" min="0" maxlength="4" id="ans${item.id}" class="answear"/>
           </div>
     `
+
     parentEle.innerHTML = question;
     questionNumber().innerText = `Question ${item.id + 1}/ ${getParmas()}`
     const btn = createEle('button');
@@ -38,7 +62,9 @@ const appendQuestion = (item, parentEle) => {
     insertELe(contentParent, btn);
     insertELe(contentParent, validationMsg)
 }
+//create math question raw data
 const dataCreator = (quatity) => {
+
     let arr = [];
     for (let index = 0; index < quatity; index++) {
         let number1 = Math.ceil((Math.random() * 100))
@@ -86,13 +112,15 @@ const dataCreator = (quatity) => {
     console.log(arr)
     return arr;
 }
+//add assist as user preferance
 const addone = (index) => {
     firstNumber(index).addEventListener("click", function () {
         this.previousElementSibling.classList.toggle("addone");
     })
 }
+//check entries return boolean
 const vaildResult = (itemValue, inputedValue) => (parseInt(itemValue) === parseInt(inputedValue)) ? true : false;
-
+//shock screen effect
 const shockScreenEffect = () => {
     const body = document.getElementsByTagName('body');
     body[0].classList.add("screen-shock")
@@ -100,80 +128,130 @@ const shockScreenEffect = () => {
         body[0].classList.remove("screen-shock")
     }, 1000)
 }
-const mumMessages=()=>{
-    setInterval(()=>{
-        const a = document.getElementsByClassName('dialog-mum-message')[0];
-    a.innerText=Mum.angry[0].message;
-    
-
-    },2000)
+//monitor movement input element 
+const handleKeyUp = event => {
+    const tempValue = event.target.value;
+    const tempAnswear = tempData[dataIndex].correct;
+    let tempValueArry = (tempValue + "").split("");
+    let tempAnswearArry = (tempAnswear + '').split("");
+    let errorElement = getEleById(tempData[dataIndex].containerId) 
+    const btn = getEleById(`btn-${tempData[dataIndex].id}`)
+    if (tempValueArry.length == 1) {
+        //entered one number 
+        if (tempValue == tempAnswear) {
+            // console.log("1")
+            btn.disabled = true;
+            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
+            
+            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
+        } else {
+            tempAnswearArry.forEach(i => {
+                switch (i) {
+                    case tempValue[0]:
+                        // console.log("2")
+                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
+                        break;
+                    default:
+                        // console.log("3")
+                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100)
+                        break;
+                }
+            })
+        }
+    } else if (tempValueArry.length == 2) {
+        // console.log("length2")
+        if (tempValue == tempAnswear) {
+            btn.disabled = true;
+            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);         
+            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
+        } else {
+            tempValueArry.forEach((ele,i) => {
+                switch (ele) {
+                    case tempAnswearArry[i]:
+                        // console.log("4")
+                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length,ErrorMsg.partiallyRight, 100)
+                        break;
+                    default:
+                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length,ErrorMsg.partiallyWrong, 100)
+                        break;
+                }
+            })
+        }
+    } else if (tempValueArry.length == 3) {
+        if (tempValue==tempAnswear) {
+            btn.disabled = true;
+            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
+            
+            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
+        }else {
+            tempValueArry.forEach((ele,i) => {
+                switch (ele) {
+                    case tempAnswearArry[i]:
+                        // console.log("5")
+                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length,ErrorMsg.partiallyRight, 100)
+                        break;
+                    default:
+                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length,ErrorMsg.partiallyWrong, 100)
+                        break;
+                }
+            })
+        }    
+    }else if(tempValueArry==0){
+        messageDisplayer(errorElement, ErrorMsg.emptyvalue.length,ErrorMsg.emptyvalue, 100)
+    }
+    else{
+        messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)
+    }
 }
-const handleChange = event => {
-    console.log(event.target.value)
-}
+//message display module
+const messageDisplayer = (errorElement, arryLength, messageType, delay) => {
+    const tempNum = getRandomNumbeArry(1, 0, arryLength);
+    setTimeout(() => addErrorMsg(errorElement, messageType[tempNum[0]].message), delay);
+};
+//button click event-check answear
+//  -append new question
+//  -shock screen if answear wrong
 const handleClick = event => {
-    console.log(inputValue(tempData[dataIndex].id).value)
+    console.log(tempData[dataIndex].id)
     console.log(tempData[dataIndex].correct)
+    let errorElement = getEleById(tempData[dataIndex].containerId)
     if (vaildResult(tempData[dataIndex].correct,
         inputValue(tempData[dataIndex].id).value)
         && dataIndex < tempData.length - 1) {
-        dataIndex++;
-        appendQuestion(tempData[dataIndex], contentParent);
-        addone(dataIndex);
-        getEleById(`btn-${dataIndex}`)
-            .addEventListener('click', handleClick);
-        // getEleById(`valiation-msg-${dataIndex}`).innerText = 'valiation-msg';
+        correctAnswearProcceedToNextQuestion();
     } else {
         shockScreenEffect()
-
-       
-        console.log("object")
-        //    dataIndex=tempData.length;
+        //shock effect
+        messageDisplayer(errorElement, ErrorMsg.wrongAnswear.length,ErrorMsg.wrongAnswear,100)
     }
 }
+//add question action depend on the vaildation 
+const correctAnswearProcceedToNextQuestion = () => {
+    getEleById(`btn-${dataIndex}`).removeEventListener('click', handleClick);
+    inputValue(tempData[dataIndex++].id).removeEventListener('keyup', handleKeyUp);
+    appendQuestion(tempData[dataIndex], contentParent);
+    addone(dataIndex);
+    getEleById(`btn-${dataIndex}`).addEventListener('click', handleClick);
+    inputValue(tempData[dataIndex].id).addEventListener('keyup', handleKeyUp)
+}
+//load up function
+const lastQuestionChecker = () => {
+
+};
+const liveMessagesController = ()=>{
+    const mumMsgNo= getRandomNumbeArry(1,0,Mum.encouerage.length,)[0]
+    familyMessagesdisplaying(Mum,"encouerage",mumMsgNo,".dialog-mum-message",1000);
+}
 export const init = () => {
-    console.log('dataindex', dataIndex)
-    mumMessages();
+    liveMessagesController();
+    opacityAnimation()
     const parameter = getParmas()
     tempData = dataCreator(parameter);
     appendQuestion(tempData[dataIndex], contentParent);
     addone(dataIndex)
     getEleById(`btn-${tempData[dataIndex].id}`).addEventListener('click', handleClick);
-    inputValue(tempData[dataIndex].id).addEventListener('change', handleChange)
+    inputValue(tempData[dataIndex].id).addEventListener('keyup', handleKeyUp)
 }
 const displayMsg = (vaildResult) => {
-    // if (vaildResult.arrAnswears.length === 0 && vaildResult.arrVaildation.length === 0) {
-    //     document.location.reload();
-    // }
-    // if (vaildResult.arrVaildation.length !== 0) {
-    //     vaildResult.arrVaildation.forEach(item => {
-    //         const ele = document.getElementById(item.input);
-    //         ele.classList.add("error");
-    //         ele.dataset.errormsg = item.msg;
-    //         ele.lastElementChild.addEventListener('focus', () => {
-    //             ele.dataset.errormsg = "";
-    //         })
-    //     })
-    // }
-    // if (vaildResult.arrAnswears.length !== 0) {
-    //     vaildResult.arrAnswears.forEach(item => {
-    //         const ele = document.getElementById(item.input);
-    //         ele.classList.add("error");
-    //         ele.dataset.errormsg = item.msg;
-    //         ele.lastElementChild.classList.add('red')
-    //         ele.lastElementChild.addEventListener('focus', () => {
-    //             ele.dataset.errormsg = "";
-    //             ele.lastElementChild.classList.remove('red');
-    //             ele.lastElementChild.addEventListener('change', function () {
-    //                 if (parseInt(this.value) === item.correct) {
-    //                     this.classList.add("green");
-    //                 }
-    //                 else {
-    //                     this.classList.replace('green', "red")
-    //                 }
-    //             })
-    //         })
-    //     })
-    // }
 }
 export { contentParent, btnSubmit };

@@ -2,7 +2,10 @@ const Mum = {
     encouerage: [{
         id: 1,
         message: "Hi Charlotte, Mummy think you can do it!!!"
-
+    },
+    {
+        id: 2,
+        message: "Yes, Charlotte! You can do it.I am counting on you!!!"
     }],
     happy: [{
         id: 1,
@@ -20,7 +23,7 @@ const Author = {
         id: 1,
         message: "Gi Gi gii... sister can do it"
     }],
-    cry:[ {
+    cry: [{
         id: 1,
         message: "So hard... Wa....."
     }]
@@ -34,11 +37,42 @@ const Charlotte = {
         },
         {
             id: 2,
-            message: " I want watch pj masks..." 
+            message: " I want watch pj masks..."
         }
-    ]
-
-
+        ]
 }
 
-export { Mum, Author, Charlotte }
+const ErrorMsg = {
+    partiallyRight: [
+        { message: "Good start, keep it up" },
+        { message: "Nice, good one" }
+    ],
+    correctAnswear: [
+        { message: "Yah, Good job" },
+        { message: "Wonderful! try another one!" },
+    ],
+    partiallyWrong: [
+        { message: "not quite right..." },
+        { message: "...mmm, not really" },
+        { message: "no...check it carefully" }
+    ],
+    takeTooLong: [
+        { message: "what are you waitting for!" },
+        { message: "Hit the number, Come on" },
+        { message: "are you reading the question???" },
+        { message: "why you are take so long..." },
+        { message: "I am sleepy....zzzzzzzz" },
+    ],
+    wrongAnswear: [
+        { message: "Wrong,check it again." }
+    ],
+    emptyvalue: [
+        { message: "alright, start again" },
+        { message: "are you ready?" },
+        { message: "think...think..." }
+    ],
+    overDigis: [
+        { message: "too many numbers" },
+    ],
+}
+export { Mum, Author, Charlotte, ErrorMsg }

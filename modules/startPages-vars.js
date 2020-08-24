@@ -14,7 +14,7 @@ const levels = [
 export const optionsCreator = () => {
     for (let index = 0; index < 6; index++) {
         select.appendChild(document.createElement("option"));
-        // index===0&& select.children[index].textContent=
+       
         select.children[index].textContent = levels[index].msg;
         select.children[index].value = levels[index].level;
     }

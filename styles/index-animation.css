@@ -11,13 +11,19 @@
 .dialog-img {
   width: var(--img-base-width);
   position: absolute;
-  top: -400px;
+  top: -380px;
   left: -60px;
   opacity: 1;
- 
-  animation: attention 2s linear 2s 1 normal forwards;
+  transition: opacity 1s;
+  /* animation: attention 2s linear 2s 1 normal forwards; */
 }
-
+.hideImg{
+ 
+  opacity: 0;
+}
+.showImg{
+  opacity: 1;
+}
 .dialog-message {
   position: absolute;
   top: -350px;
