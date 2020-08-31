@@ -103,3 +103,13 @@
     left: -205px;
   }
 }
+
+.finishScreen{
+   width: 100%;
+   height: 0vh;
+   background-color: #ffd400aa;
+   position: absolute;
+   z-index: 10;
+   transition: height 2s;
+
+}

@@ -24,15 +24,10 @@ const getRandomNumbeArry = (count = 1, start = 0, end = 0) => {
     for (let index = 0; index < count; index++) {
         const number = Math.floor(Math.random() * 10);
         if (arry.length <= count) {
-            if (number >= start && number < end) {
-                arry.push(number)
-            } else {
-                count++;
-            }
+            if (number >= start && number < end) arry.push(number);
+            else count++;
         }
-        else {
-            return;
-        }
+        else return;
     }
     return arry;
 }
@@ -49,7 +44,6 @@ const appendQuestion = (item, parentEle) => {
               <input autofocus type="number" min="0" maxlength="4" id="ans${item.id}" class="answear"/>
           </div>
     `
-
     parentEle.innerHTML = question;
     questionNumber().innerText = `Question ${item.id + 1}/ ${getParmas()}`
     const btn = createEle('button');
@@ -64,7 +58,6 @@ const appendQuestion = (item, parentEle) => {
 }
 //create math question raw data
 const dataCreator = (quatity) => {
-
     let arr = [];
     for (let index = 0; index < quatity; index++) {
         let number1 = Math.ceil((Math.random() * 100))
@@ -72,9 +65,7 @@ const dataCreator = (quatity) => {
         if (number1 > number2) {
             const symbol = getSymbol()
             let correct = 0;
-            if (symbol === "+") {
-                correct = number1 + number2;
-            }
+            if (symbol === "+") correct = number1 + number2;
             else {
                 correct = number1 - number2;
             }
@@ -143,81 +134,33 @@ const handleKeyUp = event => {
             btn.disabled = true;
             messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
             setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
-        } else {
-            a(errorElement, tempAnswearArry, tempValueArry)
-        }
+        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry)
     } else if (tempValueArry.length == 2) {
         // console.log("length2")
         if (tempValue == tempAnswear) {
             btn.disabled = true;
             messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
             setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
-        } else {
-            a(errorElement, tempAnswearArry, tempValueArry)
-        }
+        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry)  
     } else if (tempValueArry.length == 3) {
         if (tempValue == tempAnswear) {
             btn.disabled = true;
-
-
-            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
-        } else {
-            // tempValueArry.forEach((ele, i) => {
-            //     switch (ele) {
-            //         case tempAnswearArry[i]:
-            //             // console.log("5")
-            //             messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100)
-            //             break;
-            //         default:
-            //             messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100)
-            //             break;
-            //     }
-            // })
-            // entryValidLogicForMessageDisplaying(false, errorElement, tempAnswearArry, tempValueArry)
-            a(errorElement, tempAnswearArry, tempValueArry);
-        }
-    } else if (tempValueArry == 0) {
-        messageDisplayer(errorElement, ErrorMsg.emptyvalue.length, ErrorMsg.emptyvalue, 100)
-    }
-    else {
-        messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)
-    }
+            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
+        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry);   
+    } else if (tempValueArry == 0) messageDisplayer(errorElement, ErrorMsg.emptyvalue.length, ErrorMsg.emptyvalue, 100)
+    else messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)  
 }
-const entryValidLogicForMessageDisplaying = (single, errorElement, tempAnswearArry, tempValueArry) => {
-    if (single) {
-        for (let index = 0; index < tempAnswearArry.length; index++) {
-            const element = tempAnswearArry[index];
-            if (element === tempValueArry[0]) {
-                messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
-                break;
-            } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
-        }
-    }
-    else if (tempValueArry.length === 2 && tempAnswearArry.length === 3) {
-        console.log("object")
-        const ele = tempAnswearArry[++index]
-        if (ele === tempValueArry[index]) {
-            messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
-
-        } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
-    }
-    else if (tempValueArry.length === 3 && tempAnswearArry.length === 3) {
-        const ele = tempAnswearArry[index]
-        if (ele === tempValueArry[index]) {
-            messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
-
-        } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
-    }
-    else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
-}
-const a = (errorElement, tempAnswearArry, tempValueArry) => {
+const entryValidLogicForMessageDisplaying = (errorElement, tempAnswearArry, tempValueArry) => {
     let count = 0;
+    const copyArry = tempAnswearArry;
     tempValueArry.forEach(item => {
-        const index = tempAnswearArry.indexOf(item);
-        if (index != -1) count++;
+        const index = copyArry.indexOf(item);
+        if (index != -1) {
+            copyArry.splice(index, 1);
+            console.log(copyArry)
+            count++;
+        }
     })
-    console.log(count)
-    console.log(tempValueArry.length)
     if (count == tempValueArry.length) messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
     else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
 };
@@ -269,7 +212,5 @@ export const init = () => {
     addone(dataIndex)
     getEleById(`btn-${tempData[dataIndex].id}`).addEventListener('click', handleClick);
     inputValue(tempData[dataIndex].id).addEventListener('keyup', handleKeyUp)
-}
-const displayMsg = (vaildResult) => {
 }
 export { contentParent, btnSubmit };
