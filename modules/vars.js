@@ -1,7 +1,7 @@
 
-import { familyMessagesdisplaying, addErrorMsg ,appendLetter} from '../modules/message-animation.js'
+import { familyMessagesdisplaying, addErrorMsg, appendLetter } from '../modules/message-animation.js'
 import { ErrorMsg, Mum } from '../data/messages.js'
-import {opacityAnimation} from '../modules/image-animation.js'
+import { opacityAnimation } from '../modules/image-animation.js'
 
 const contentParent = document.querySelector('.content');
 
@@ -134,7 +134,7 @@ const handleKeyUp = event => {
     const tempAnswear = tempData[dataIndex].correct;
     let tempValueArry = (tempValue + "").split("");
     let tempAnswearArry = (tempAnswear + '').split("");
-    let errorElement = getEleById(tempData[dataIndex].containerId) 
+    let errorElement = getEleById(tempData[dataIndex].containerId)
     const btn = getEleById(`btn-${tempData[dataIndex].id}`)
     if (tempValueArry.length == 1) {
         //entered one number 
@@ -142,67 +142,85 @@ const handleKeyUp = event => {
             // console.log("1")
             btn.disabled = true;
             messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
-            
             setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
         } else {
-            tempAnswearArry.forEach(i => {
-                switch (i) {
-                    case tempValue[0]:
-                        // console.log("2")
-                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
-                        break;
-                    default:
-                        // console.log("3")
-                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100)
-                        break;
-                }
-            })
+            a(errorElement, tempAnswearArry, tempValueArry)
         }
     } else if (tempValueArry.length == 2) {
         // console.log("length2")
         if (tempValue == tempAnswear) {
             btn.disabled = true;
-            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);         
+            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
             setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
         } else {
-            tempValueArry.forEach((ele,i) => {
-                switch (ele) {
-                    case tempAnswearArry[i]:
-                        // console.log("4")
-                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length,ErrorMsg.partiallyRight, 100)
-                        break;
-                    default:
-                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length,ErrorMsg.partiallyWrong, 100)
-                        break;
-                }
-            })
+            a(errorElement, tempAnswearArry, tempValueArry)
         }
     } else if (tempValueArry.length == 3) {
-        if (tempValue==tempAnswear) {
+        if (tempValue == tempAnswear) {
             btn.disabled = true;
-            messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
-            
+
+
             setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
-        }else {
-            tempValueArry.forEach((ele,i) => {
-                switch (ele) {
-                    case tempAnswearArry[i]:
-                        // console.log("5")
-                        messageDisplayer(errorElement, ErrorMsg.partiallyRight.length,ErrorMsg.partiallyRight, 100)
-                        break;
-                    default:
-                        messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length,ErrorMsg.partiallyWrong, 100)
-                        break;
-                }
-            })
-        }    
-    }else if(tempValueArry==0){
-        messageDisplayer(errorElement, ErrorMsg.emptyvalue.length,ErrorMsg.emptyvalue, 100)
+        } else {
+            // tempValueArry.forEach((ele, i) => {
+            //     switch (ele) {
+            //         case tempAnswearArry[i]:
+            //             // console.log("5")
+            //             messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100)
+            //             break;
+            //         default:
+            //             messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100)
+            //             break;
+            //     }
+            // })
+            // entryValidLogicForMessageDisplaying(false, errorElement, tempAnswearArry, tempValueArry)
+            a(errorElement, tempAnswearArry, tempValueArry);
+        }
+    } else if (tempValueArry == 0) {
+        messageDisplayer(errorElement, ErrorMsg.emptyvalue.length, ErrorMsg.emptyvalue, 100)
     }
-    else{
+    else {
         messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)
     }
 }
+const entryValidLogicForMessageDisplaying = (single, errorElement, tempAnswearArry, tempValueArry) => {
+    if (single) {
+        for (let index = 0; index < tempAnswearArry.length; index++) {
+            const element = tempAnswearArry[index];
+            if (element === tempValueArry[0]) {
+                messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
+                break;
+            } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
+        }
+    }
+    else if (tempValueArry.length === 2 && tempAnswearArry.length === 3) {
+        console.log("object")
+        const ele = tempAnswearArry[++index]
+        if (ele === tempValueArry[index]) {
+            messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
+
+        } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
+    }
+    else if (tempValueArry.length === 3 && tempAnswearArry.length === 3) {
+        const ele = tempAnswearArry[index]
+        if (ele === tempValueArry[index]) {
+            messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
+
+        } else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
+    }
+    else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
+}
+const a = (errorElement, tempAnswearArry, tempValueArry) => {
+    let count = 0;
+    tempValueArry.forEach(item => {
+        const index = tempAnswearArry.indexOf(item);
+        if (index != -1) count++;
+    })
+    console.log(count)
+    console.log(tempValueArry.length)
+    if (count == tempValueArry.length) messageDisplayer(errorElement, ErrorMsg.partiallyRight.length, ErrorMsg.partiallyRight, 100);
+    else messageDisplayer(errorElement, ErrorMsg.partiallyWrong.length, ErrorMsg.partiallyWrong, 100);
+};
 //message display module
 const messageDisplayer = (errorElement, arryLength, messageType, delay) => {
     const tempNum = getRandomNumbeArry(1, 0, arryLength);
@@ -222,7 +240,7 @@ const handleClick = event => {
     } else {
         shockScreenEffect()
         //shock effect
-        messageDisplayer(errorElement, ErrorMsg.wrongAnswear.length,ErrorMsg.wrongAnswear,100)
+        messageDisplayer(errorElement, ErrorMsg.wrongAnswear.length, ErrorMsg.wrongAnswear, 100)
     }
 }
 //add question action depend on the vaildation 
@@ -238,9 +256,9 @@ const correctAnswearProcceedToNextQuestion = () => {
 const lastQuestionChecker = () => {
 
 };
-const liveMessagesController = ()=>{
-    const mumMsgNo= getRandomNumbeArry(1,0,Mum.encouerage.length,)[0]
-    familyMessagesdisplaying(Mum,"encouerage",mumMsgNo,".dialog-mum-message",1000);
+const liveMessagesController = () => {
+    const mumMsgNo = getRandomNumbeArry(1, 0, Mum.encouerage.length,)[0]
+    familyMessagesdisplaying(Mum, "encouerage", mumMsgNo, ".dialog-mum-message", 1000);
 }
 export const init = () => {
     liveMessagesController();
