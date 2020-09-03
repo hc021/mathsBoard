@@ -106,10 +106,27 @@
 
 .finishScreen{
    width: 100%;
-   height: 0vh;
+   height: 100vh;
    background-color: #ffd400aa;
    position: absolute;
    z-index: 10;
-   transition: height 2s;
-
+   opacity: 0;
+   transition: opacity 3s; 
+   display: none;
+}
+.finishScreen-appear{
+  opacity: 1;
+  display: block;
+}
+.congration-text{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.congration-text h2{
+  color: #1e8cd4;
+  font-size: 3rem;
 }

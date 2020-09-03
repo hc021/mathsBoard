@@ -74,5 +74,10 @@ const ErrorMsg = {
     overDigis: [
         { message: "too many numbers" },
     ],
+    congrat: [
+        { message: "Well done Charlotte!!!" },
+        { message: "Good on you Charlotte!!!" },
+        { message: "You are the best my dear" },
+    ]
 }
 export { Mum, Author, Charlotte, ErrorMsg }

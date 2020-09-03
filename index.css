@@ -65,7 +65,7 @@ body {
   margin: 0 20px;
 }
 .answear {
-  font-family: 'Butterfly Kids', cursive;
+  font-family: 'Short Stack', cursive;
   font-size: 3rem;
   outline: none;
   width: 150px;
@@ -86,7 +86,7 @@ cursor: pointer;
 transition: .3s;
 border-radius: 3px;
 outline: none;
-font-family: 'Butterfly Kids', cursive;
+font-family: 'Short Stack', cursive;
 background: #784c88;
 font-weight: 900;
 }

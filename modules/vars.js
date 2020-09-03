@@ -2,6 +2,7 @@
 import { familyMessagesdisplaying, addErrorMsg, appendLetter } from '../modules/message-animation.js'
 import { ErrorMsg, Mum } from '../data/messages.js'
 import { opacityAnimation } from '../modules/image-animation.js'
+import { optionsCreator, select, startBtn } from './startPages-vars.js'
 
 const contentParent = document.querySelector('.content');
 
@@ -133,22 +134,25 @@ const handleKeyUp = event => {
             // console.log("1")
             btn.disabled = true;
             messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
-            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
+            if (tempData[dataIndex].id >= tempData.length - 1) lastQuestionChecker();
+            else setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
         } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry)
     } else if (tempValueArry.length == 2) {
         // console.log("length2")
         if (tempValue == tempAnswear) {
             btn.disabled = true;
             messageDisplayer(errorElement, ErrorMsg.correctAnswear.length, ErrorMsg.correctAnswear, 100);
-            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
-        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry)  
+            if (tempData[dataIndex].id >= tempData.length - 1) lastQuestionChecker();
+            else setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000)
+        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry)
     } else if (tempValueArry.length == 3) {
         if (tempValue == tempAnswear) {
             btn.disabled = true;
-            setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
-        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry);   
+            if (tempData[dataIndex].id >= tempData.length - 1) lastQuestionChecker();
+            else setTimeout(() => (correctAnswearProcceedToNextQuestion()), 3000);
+        } else entryValidLogicForMessageDisplaying(errorElement, tempAnswearArry, tempValueArry);
     } else if (tempValueArry == 0) messageDisplayer(errorElement, ErrorMsg.emptyvalue.length, ErrorMsg.emptyvalue, 100)
-    else messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)  
+    else messageDisplayer(errorElement, ErrorMsg.overDigis.length, ErrorMsg.overDigis, 100)
 }
 const entryValidLogicForMessageDisplaying = (errorElement, tempAnswearArry, tempValueArry) => {
     let count = 0;
@@ -197,7 +201,16 @@ const correctAnswearProcceedToNextQuestion = () => {
 }
 //load up function
 const lastQuestionChecker = () => {
-
+    const temp1 = document.querySelector(".finishScreen");
+    const congMsg = document.querySelector("#congration-text-h2");
+    temp1.classList.add("finishScreen-appear");
+    const tempRandomIndex = getRandomNumbeArry(1, 0, ErrorMsg.congrat.length);
+    congMsg.innerText = ErrorMsg.congrat[tempRandomIndex].message;
+    setTimeout(function () {
+        temp1.classList.remove("finishScreen-appear");
+        window.close();
+        window.open('./start.html', '_blank');
+    }, 5000)
 };
 const liveMessagesController = () => {
     const mumMsgNo = getRandomNumbeArry(1, 0, Mum.encouerage.length,)[0]
@@ -212,5 +225,6 @@ export const init = () => {
     addone(dataIndex)
     getEleById(`btn-${tempData[dataIndex].id}`).addEventListener('click', handleClick);
     inputValue(tempData[dataIndex].id).addEventListener('keyup', handleKeyUp)
+    //lastQuestionChecker()
 }
 export { contentParent, btnSubmit };
