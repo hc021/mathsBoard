@@ -6,5 +6,5 @@ export const liveMessagesControll = () => {
     const mumMsgNo = getRandomNumbeArry(1, 0, Mum.encouerage.length,)[0];
     const charleMsgindex = getRandomNumbeArry(1,0,Charlotte.normal.length)[0];
     familyMessagesdisplaying(Mum, "encouerage", mumMsgNo, ".dialog-mum-message", 1000);
-    familyMessagesdisplaying(Charlotte,"normal",charleMsgindex,".dialog-message",1000)
+    familyMessagesdisplaying(Charlotte,"normal",charleMsgindex,".dialog-message",5000)
 }
