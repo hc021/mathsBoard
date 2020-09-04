@@ -38,6 +38,14 @@ const Charlotte = {
         {
             id: 2,
             message: " I want watch pj masks..."
+        },
+        {
+            id: 3,
+            message: "ok, I can do it... ",
+        },
+        {
+            id: 4,
+            message: "I am not a baby anymore...I am a super maths gril."
         }
         ]
 }
