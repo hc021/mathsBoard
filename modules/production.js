@@ -80,7 +80,7 @@ const dataCreator = (quatity) => {
             })
         }
     }
-    console.log(arr)
+    // console.log(arr)
     return arr;
 }
 //add assist as user preferance
@@ -97,7 +97,7 @@ const entryValidLogicForMessageDisplaying = (errorElement, tempAnswearArry, temp
         const index = copyArry.indexOf(item);
         if (index != -1) {
             copyArry.splice(index, 1);
-            console.log(copyArry)
+            // console.log(copyArry)
             count++;
         }
     })
